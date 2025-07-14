@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-const Timeline: React.FC = () => {
-  const [status, setStatus] = useState("Loading...");
+import { getTimeline } from "../services/api";
+import TimelineNode from "../components/TimelineNode"; // Adjust if needed
+import React, { useState, useEffect } from "react";
+export default function Timeline() {
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    axios.get<{ status: string }>("/api/ping")
-      .then((res) => setStatus(res.data.status))
-      .catch(() => setStatus("API error"));
+    getTimeline().then(setEvents);
   }, []);
 
   return (
-    <div>
-      <h1>Timeline</h1>
-      <p>Backend status: {status}</p>
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">🧬 Soul Timeline</h1>
+      {events.map((event: any, idx: number) => (
+  <TimelineNode key={idx} event={event} />
+))}
     </div>
   );
-};
-
-export default Timeline;
+}
