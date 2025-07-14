@@ -21,7 +21,15 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Enable composite mode for referenced projects */
+    "composite": true,                 // Required for this to be a referenced project
+    "declaration": true                // Enable declaration file generation
   },
-  "include": ["src"]
+  "include": ["src"],                   // Include all source files in the "src" folder
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.node.json" }  // Reference the Node-specific tsconfig
+  ]
 }
