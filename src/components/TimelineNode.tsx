@@ -1,17 +1,22 @@
-interface EventProps {
-  event: {
-    text: string;
-    rationale: string;
-    timestamp: string;
-  };
+// src/components/TimelineNode.tsx
+
+import type { FC } from "react";
+import type { TimelineEntry } from "../types/timeline";
+
+interface TimelineNodeProps {
+  entry: TimelineEntry;
 }
 
-export default function TimelineNode({ event }: EventProps) {
-  return (
-    <div className="border rounded-lg p-4 shadow mb-4 bg-white">
-      <p className="font-semibold">📝 Input: {event.text}</p>
-      <p className="italic text-gray-600">🧠 Gemini Reflection: {event.rationale}</p>
-      <p className="text-xs text-gray-400">{new Date(event.timestamp).toLocaleString()}</p>
+const TimelineNode: FC<TimelineNodeProps> = ({ entry }) => (
+  <div className="mb-4 p-4 rounded-2xl shadow bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+    <div className="flex items-center justify-between">
+      <span className="font-bold">{entry.summary}</span>
+      <span className="text-xs text-zinc-500">{new Date(entry.timestamp).toLocaleString()}</span>
     </div>
-  );
-}
+    {entry.emotion && (
+      <div className="mt-1 text-xs italic">{entry.emotion}</div>
+    )}
+  </div>
+);
+
+export default TimelineNode;
