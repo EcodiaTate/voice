@@ -1,4 +1,15 @@
 {
+  "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "react"]
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
