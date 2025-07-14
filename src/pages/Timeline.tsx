@@ -6,7 +6,7 @@ const Timeline: React.FC = () => {
 
   useEffect(() => {
     axios.get("/api/ping")
-      .then(res => setStatus(res.data.status))
+      .then((res: { data: { status: string } }) => setStatus(res.data.status))
       .catch(() => setStatus("API error"));
   }, []);
 
