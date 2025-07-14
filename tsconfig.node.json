@@ -9,10 +9,9 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": false,                      // Needed for project reference build
+    "noEmit": false,                     // Needed for project reference build
 
     /* Linting */
     "strict": true,
