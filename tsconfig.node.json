@@ -1,17 +1,33 @@
 {
   "compilerOptions": {
-    "composite": true,          // Enable composite mode for references
-    "declaration": true,        // Ensure declaration files are generated
-    "target": "esnext",
-    "lib": ["dom", "esnext"],   // Add 'dom' for JSX and browser APIs
-    "module": "esnext",
+    "composite": true,
+    "declaration": true,
+    "target": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "module": "ESNext",
     "jsx": "react-jsx",
-    "moduleResolution": "node",
-    "noEmit": false             // Allow emitting declaration files
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": false,                      // Needed for project reference build
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* Node.js types */
+    "types": ["node"]
   },
   "include": [
+    "vite.config.ts",
     "src/**/*.ts",
-    "src/**/*.tsx",
-    "vite.config.ts"
+    "src/**/*.tsx"
   ]
 }

@@ -1,11 +1,35 @@
 {
   "compilerOptions": {
-    "composite": true,          // Enable composite mode for references
-    "declaration": true,        // Ensure declaration files are generated
-    "target": "esnext",
-    "lib": ["dom", "esnext"],   // Add 'dom' for JSX and browser APIs
-    "module": "esnext",
-    "jsx": "react-jsx"
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": false,                       // Emit is required for referenced builds
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* Composite for project references */
+    "composite": true,
+    "declaration": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src"],
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.node.json" }
+  ]
 }
