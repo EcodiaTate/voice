@@ -1,35 +1,11 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    /* Enable composite mode for referenced projects */
-    "composite": true,                 // Required for this to be a referenced project
-    "declaration": true                // Enable declaration file generation
+    "composite": true,          // Enable composite mode for references
+    "declaration": true,        // Ensure declaration files are generated
+    "target": "esnext",
+    "lib": ["dom", "esnext"],   // Add 'dom' for JSX and browser APIs
+    "module": "esnext",
+    "jsx": "react-jsx"
   },
-  "include": ["src"],                   // Include all source files in the "src" folder
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.node.json" }  // Reference the Node-specific tsconfig
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

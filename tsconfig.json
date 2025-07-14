@@ -2,20 +2,19 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "lib": ["dom", "esnext"],          // Ensure 'dom' is included for JSX and browser APIs
-    "jsx": "react-jsx",                // Add JSX support for React
+    "lib": ["dom", "esnext"],       // Add 'dom' for JSX and browser APIs
+    "jsx": "react-jsx",             // Enable JSX support for React
     "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "composite": true,                 // Required for references to work correctly
-    "noEmit": false                    // Ensure TypeScript emits the build files
+    "composite": true,              // Enable composite mode for referenced projects
+    "noEmit": false                 // Allow emitting declaration files
   },
-  "include": ["src"],                   // Include all source files in the "src" folder
-  "files": [],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "references": [
-    { "path": "./tsconfig.app.json" },   // Reference to app-specific tsconfig
-    { "path": "./tsconfig.node.json" }   // Reference to node-specific tsconfig
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
   ]
 }

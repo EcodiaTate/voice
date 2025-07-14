@@ -1,37 +1,17 @@
 {
   "compilerOptions": {
-    /* Enable composite mode and declaration files */
-    "composite": true,
-    "declaration": true,
-
-    /* JS/TS setup */
+    "composite": true,          // Enable composite mode for references
+    "declaration": true,        // Ensure declaration files are generated
     "target": "esnext",
-    "lib": ["dom", "esnext"],         // Add "dom" for JSX and browser APIs
+    "lib": ["dom", "esnext"],   // Add 'dom' for JSX and browser APIs
     "module": "esnext",
-    "jsx": "react-jsx",               // Ensure JSX is supported for React
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,                   // Prevent emit for this project
-
-    /* Linting and strict checks */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    /* Node.js specific settings */
-    "types": ["node"]                 // Ensure Node.js types are included
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "noEmit": false             // Allow emitting declaration files
   },
   "include": [
-    "vite.config.ts",                // Include the Vite config for Node.js
-    "src/**/*.ts",                   // Include all TypeScript files in the src folder
-    "src/**/*.tsx"                   // Include all TSX files in the src folder for React
-  ],
-  "files": []
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "vite.config.ts"
+  ]
 }
