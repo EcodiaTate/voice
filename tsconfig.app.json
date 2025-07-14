@@ -11,7 +11,7 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": false,                       // Emit is required for referenced builds
+    "noEmit": false,  // Emit is required for referenced builds
     "jsx": "react-jsx",
 
     /* Linting */
@@ -26,7 +26,7 @@
     "composite": true,
     "declaration": true
   },
-  "include": ["src"],
+  "include": ["src"],  // Include all source files in the "src" folder
   "files": [],
   "references": [
     { "path": "./tsconfig.node.json" }
