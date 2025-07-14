@@ -11,7 +11,7 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": false,  // Emit is required for referenced builds
+    "noEmit": false,                       // Emit is required for referenced builds
     "jsx": "react-jsx",
 
     /* Linting */

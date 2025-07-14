@@ -11,7 +11,7 @@
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": false,  // Needed for project reference build
+    "noEmit": false,                     // Needed for project reference build
 
     /* Linting */
     "strict": true,
@@ -22,12 +22,11 @@
     "noUncheckedSideEffectImports": true,
 
     /* Node.js types */
-    "types": ["node"]
+    "types": ["node"]                   // Ensure Node.js types are included
   },
   "include": [
-    "vite.config.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ],
-  "files": []
+    "vite.config.ts",                   // Include the Vite config for Node.js
+    "src/**/*.ts",                      // Include all TypeScript files in the src folder
+    "src/**/*.tsx"                      // Include all TSX files in the src folder for React
+  ]
 }
