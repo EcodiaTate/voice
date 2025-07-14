@@ -1,6 +1,6 @@
 import { getTimeline } from "../services/api";
 import TimelineNode from "../components/TimelineNode"; // Adjust if needed
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; 
 export default function Timeline() {
   const [events, setEvents] = useState([]);
 
