@@ -91,20 +91,33 @@ export default App;
 
 ### FILE: src\App.tsx
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Timeline from "./pages/Timeline";
+// /src/App.tsx
+import { useEffect } from "react";
+import { connectSocket } from "./services/socket";
+import NavBar from "./components/NavBar";
+import { Routes, Route } from "react-router-dom";
+import TimelinePage from "./pages/Timeline";
+import DreamsPage from "./pages/Dreams";
+// ...import more pages as you add them
 
-function App() {
+export default function App() {
+  useEffect(() => {
+    connectSocket(); // Connect once on mount
+  }, []);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/soul/" element={<Timeline />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <NavBar />
+      <div className="pt-20 max-w-3xl mx-auto">
+        <Routes>
+          <Route path="/soul" element={<TimelinePage />} />
+          <Route path="/soul/dreams" element={<DreamsPage />} />
+          {/* Add more routes here */}
+        </Routes>
+      </div>
+    </div>
   );
 }
-
-export default App;
 
 
 ### FILE: src\main.d.ts
@@ -166,6 +179,60 @@ export default function ChatModal() {
 }
 
 
+### FILE: src\components\DreamCard.tsx
+
+// /src/components/DreamCard.tsx
+import { Card } from 'shadcn/ui/card'
+export default function DreamCard({ dream }) {
+  return (
+    <Card className="p-4 rounded-2xl shadow-xl bg-gradient-to-br from-indigo-100 via-white to-purple-100">
+      <div className="text-xs text-gray-500">{dream.timestamp}</div>
+      <div className="font-semibold mb-2">{dream.user_origin || 'System'}</div>
+      <div className="text-lg">{dream.raw_text}</div>
+      {dream.meta_notes && <div className="mt-2 text-sm italic">{dream.meta_notes}</div>}
+    </Card>
+  )
+}
+
+
+### FILE: src\components\NavBar.tsx
+
+// /src/components/NavBar.tsx
+import { Link, useLocation } from "react-router-dom";
+
+const navLinks = [
+  { path: "/soul", label: "Soul Timeline" },
+  { path: "/soul/dreams", label: "Dreams" },
+  // Add more links as needed (Agents, Events, Admin, etc)
+];
+
+export default function NavBar() {
+  const location = useLocation();
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-20 bg-white/80 backdrop-blur border-b border-gray-200 px-6 py-2 flex items-center justify-center shadow-sm">
+      <div className="flex gap-6 items-center">
+        <span className="font-extrabold text-xl tracking-tight text-purple-800 mr-4">Voice & Soul</span>
+        {navLinks.map(({ path, label }) => (
+          <Link
+            key={path}
+            to={path}
+            className={
+              "font-medium px-3 py-1 rounded transition " +
+              (location.pathname === path
+                ? "bg-purple-100 text-purple-700 shadow"
+                : "text-gray-700 hover:bg-purple-50")
+            }
+          >
+            {label}
+          </Link>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+
 ### FILE: src\components\timeline.ts
 
 // src/types/timeline.ts
@@ -203,6 +270,31 @@ const TimelineNode: FC<TimelineNodeProps> = ({ entry }) => (
 );
 
 export default TimelineNode;
+
+
+### FILE: src\pages\Dreams.tsx
+
+// /src/pages/Dreams.tsx
+import { useEffect, useState } from 'react'
+import DreamCard from '../components/DreamCard'
+import { fetchDreams } from '../services/api'
+import { on } from '../services/socket'
+
+export default function DreamsPage() {
+  const [dreams, setDreams] = useState<any[]>([])
+  useEffect(() => {
+    fetchDreams().then(data => setDreams(data.dreams || []))
+    const handler = (dream: any) => setDreams(ds => [dream, ...ds])
+    on('dream_update', handler)
+    return () => on('dream_update', handler) // cleanup
+  }, [])
+  return (
+    <div className="p-4 max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4">Dreams</h1>
+      <div className="grid gap-4">{dreams.map(d => <DreamCard dream={d} key={d.id} />)}</div>
+    </div>
+  )
+}
 
 
 ### FILE: src\pages\Timeline.d.ts
@@ -268,11 +360,15 @@ export async function getTimeline(): Promise<TimelineEntry[]> {
   return await fetch("/api/timeline").then(res => res.json());
 }
 
+export async function fetchDreams() {
+  const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/dreams`)
+  return await res.json()
+}
+
 
 ### FILE: src\services\socket.ts
 
 // src/services/socket.ts
-
 import { io, Socket } from "socket.io-client";
 
 let socket: Socket | null = null;
@@ -281,6 +377,7 @@ export const connectSocket = () => {
   if (!socket) {
     socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000");
   }
+  return socket;
 };
 
 export const on = (event: string, callback: (...args: any[]) => void) => {
@@ -289,8 +386,11 @@ export const on = (event: string, callback: (...args: any[]) => void) => {
 };
 
 export const off = (event: string, callback: (...args: any[]) => void) => {
+  if (!socket) connectSocket();
   socket?.off(event, callback);
 };
+
+export { socket };
 
 
 ### FILE: src\types\timeline.ts
